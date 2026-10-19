@@ -8,14 +8,32 @@ This project implements a Medallion Architecture (Bronze, Silver, and Gold) usin
 
 ## Architecture
 
-**Data Source → Bronze → Silver → Gold → Power BI**
+The project follows a medallion architecture to transform raw retail transactions into business-ready analytics.
 
-- **Source:** UCI Online Retail II dataset
-- **Bronze:** Ingests the original retail transaction data into Lakehouse tables.
-- **Silver:** Standardizes data types, derives sales amounts, and identifies data quality issues.
-- **Gold:** Creates aggregated datasets for monthly sales, country performance, and product performance.
-- **Reporting:** Power BI report with four analytical pages.
-- **Orchestration:** Microsoft Fabric pipeline coordinates the notebook activities.
+```mermaid
+flowchart TD
+    A["UCI Online Retail II Dataset"] --> B["Microsoft Fabric Lakehouse"]
+    B --> C["Bronze Layer<br/>Raw Retail Data"]
+    C --> D["Silver Layer<br/>Cleaning, Standardization<br/>and Data Quality Flags"]
+    D --> E["Gold Layer<br/>Monthly, Country<br/>and Product Aggregations"]
+    E --> F["Power BI Semantic Model"]
+    F --> G["Retail Sales Intelligence Dashboard"]
+
+    style C fill:#CD7F32,color:#fff
+    style D fill:#C0C0C0,color:#000
+    style E fill:#D4AF37,color:#000
+    style G fill:#2563EB,color:#fff
+```
+
+### Key Components
+
+- **Source:** UCI Online Retail II transaction dataset.
+- **Bronze:** Ingests the original retail data into the Lakehouse.
+- **Silver:** Standardizes fields, calculates sales amount, and flags cancellations, negative quantities, and missing customer IDs.
+- **Gold:** Creates aggregated tables for monthly sales, country sales, and product performance.
+- **Power BI:** Presents executive KPIs, geographic analysis, product performance, and data-quality insights.
+
+The Microsoft Fabric pipeline orchestrates the Bronze → Silver → Gold processing sequence.
 
 ## Technologies Used
 
