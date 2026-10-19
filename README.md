@@ -1,109 +1,118 @@
+# End-to-End Retail Sales Intelligence Platform using Microsoft Fabric
 
-# Retail Sales Intelligence Platform | Microsoft Fabric
-
-An end-to-end retail analytics engineering project built with Microsoft Fabric, PySpark, SQL, and Power BI.
+An end-to-end data analytics project built using Microsoft Fabric and Power BI to transform retail transaction data into meaningful business insights.
 
 ## Project Overview
 
-This project demonstrates how retail transaction data can be transformed into reliable, analytics-ready data products using a modern medallion architecture.
+This project implements a Medallion Architecture (Bronze, Silver, and Gold) using Microsoft Fabric. The solution ingests retail transaction data, performs data cleaning and transformation, creates analytical tables, and presents insights through an interactive four-page Power BI report.
 
-The solution will ingest raw retail data, apply data quality and transformation rules, create a dimensional data model, and deliver business insights through Power BI.
+## Architecture
 
-**Project status:** In progress
+**Data Source → Bronze → Silver → Gold → Power BI**
 
-## Business Objectives
+- **Source:** UCI Online Retail II dataset
+- **Bronze:** Ingests the original retail transaction data into Lakehouse tables.
+- **Silver:** Standardizes data types, derives sales amounts, and identifies data quality issues.
+- **Gold:** Creates aggregated datasets for monthly sales, country performance, and product performance.
+- **Reporting:** Power BI report with four analytical pages.
+- **Orchestration:** Microsoft Fabric pipeline coordinates the notebook activities.
 
-- Analyze sales revenue and sales volume trends.
-- Identify top-performing products and countries.
-- Measure customer purchasing behavior and repeat purchases.
-- Analyze invoice cancellations and negative-quantity transactions.
-- Build a reusable and validated analytics data model.
-- Develop interactive Power BI reports for business decision-making.
+## Technologies Used
 
-## Technology Stack
+- Microsoft Fabric
+- Fabric Lakehouse
+- PySpark
+- Python
+- Power BI
+- DAX
+- Medallion Architecture
+- Data quality validation and pipeline orchestration
 
-- Microsoft Fabric Lakehouse
-- Fabric Data Factory pipelines
-- PySpark and Spark SQL
-- Fabric Warehouse and T-SQL
-- Power BI and DAX
-- Git and GitHub
+## Pipeline Execution
+
+The end-to-end pipeline runs the Bronze ingestion, Silver transformation, and Gold analytics notebooks in sequence.
+
+![Successful Fabric pipeline](screenshots/pipeline-success.png)
+
+## Lakehouse Tables
+
+The Lakehouse contains the Bronze, Silver, and Gold tables used throughout the analytics workflow.
+
+![Lakehouse tables](screenshots/lakehouse-tables.png)
+
+## Power BI Report
+
+### 1. Executive Overview
+
+Provides an overview of net sales value, net quantity, invoice counts across months, monthly sales trends, and top-performing countries.
+
+![Executive Overview](screenshots/executive-overview.png)
+
+### 2. Geographic Analysis
+
+Compares country-level sales performance and identified customer counts.
+
+![Geographic Analysis](screenshots/geographic-analysis.png)
+
+### 3. Product Performance
+
+Analyzes top products by net sales and net quantity, with a detailed product performance table.
+
+![Product Performance](screenshots/product-performance.png)
+
+### 4. Data Quality & Insights
+
+Highlights missing customer identifiers, cancellation invoices, negative quantities, and invalid core-field records.
+
+![Data Quality and Insights](screenshots/data-quality-insights.png)
+
+## Data Quality Findings
+
+The Silver dataset contains approximately 1.067 million transaction rows.
+
+| Data quality metric | Observed count |
+|---|---:|
+| Total transaction rows | 1,067,371 |
+| Missing customer IDs | 243,007 |
+| Cancellation invoice rows | 19,494 |
+| Negative quantity rows | 22,950 |
+| Invalid core-field rows | 0 |
+
+Data quality flags are retained for analysis rather than automatically removing potentially meaningful transactions.
+
+**Important considerations:**
+- Cancellation invoices and negative quantities may overlap.
+- Missing customer identifiers limit customer-level analysis.
+- Net sales amount is calculated as quantity multiplied by unit price. It is not profit or independently audited revenue.
+- Net quantity can include returns and adjustments.
+
+## Gold Analytics Tables
+
+| Gold table | Purpose | Row count |
+|---|---|---:|
+| `gold_retail_monthly_sales` | Monthly sales analysis | 25 |
+| `gold_retail_country_sales` | Country-level performance | 43 |
+| `gold_retail_product_sales` | Product-level performance | 8,991 |
+
+These counts represent aggregation output sizes and do not, by themselves, establish full business correctness.
+
+## Key Learnings
+
+- Implementing a Bronze–Silver–Gold data architecture.
+- Ingesting and transforming large transaction datasets with PySpark.
+- Creating analytical aggregation tables in a Lakehouse.
+- Building and validating an end-to-end Fabric pipeline.
+- Developing multi-page Power BI reports.
+- Identifying and communicating data quality limitations.
 
 ## Data Source
 
-**Dataset:** Online Retail II  
-**Provider:** UCI Machine Learning Repository  
-**Source:** https://archive.ics.uci.edu/dataset/502/online+retail+ii
+UCI Machine Learning Repository: [Online Retail II Dataset](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
 
-The dataset contains retail transaction records across two periods.
+## Author
 
-The original source data will be preserved. Data cleaning, transaction classification, and business rules will be documented and implemented reproducibly.
+**Samprath Shanbhag**
 
-## Planned Architecture
+GitHub: [samprathshanbhag](https://github.com/samprathshanbhag)
 
-1. **Bronze:** Ingest and preserve raw transaction data.
-2. **Silver:** Standardize data types, handle missing values, identify duplicates, and classify transactions.
-3. **Gold:** Create fact and dimension tables for analytics.
-4. **Semantic Model:** Define relationships and validated DAX measures.
-5. **Reporting:** Build interactive Power BI reports and communicate business findings.
-
-## Repository Structure
-
-```text
-data/
-notebooks/
-pipelines/
-sql/
-powerbi/
-docs/
-tests/
-README.md
-```
-
-## Data Quality and Validation
-
-The project will include checks for:
-
-- Missing and invalid values
-- Duplicate records
-- Invalid quantities and prices
-- Transaction classification
-- Source-to-target reconciliation
-- Referential integrity in the dimensional model
-
-## Business Metrics
-
-Planned metrics include:
-
-- Total Sales Amount
-- Units Sold
-- Distinct Invoices
-- Average Order Value
-- Monthly Sales Growth
-- Cancellation Rate
-- Repeat Customer Rate
-
-Metrics will be finalized after source-data profiling and business-rule validation.
-
-## Project Deliverables
-
-- Reproducible data ingestion and transformation workflows
-- Documented data model and architecture
-- SQL scripts and data-quality checks
-- Power BI report and measures
-- Setup instructions and project findings
-
-## Limitations
-
-The source dataset does not provide product costs, so profit cannot be calculated reliably without an additional cost source. Negative quantities and cancellation invoices will be investigated and classified using documented rules rather than automatically treated as product returns.
-
-## License and Attribution
-
-The dataset is provided by the UCI Machine Learning Repository under CC BY 4.0. See the official dataset page for its terms and attribution requirements.
-
-Project code and documentation licensing will be specified separately.
-
----
-
-**Author:** Samprath Shanbhag  
-**GitHub:** https://github.com/samprathshanbhag
+LinkedIn: [Samprath Shanbhag](https://www.linkedin.com/in/samprath-shanbhag-27b587341)
