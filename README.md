@@ -114,6 +114,28 @@ Data quality flags are retained for analysis rather than automatically removing 
 
 These counts represent aggregation output sizes and do not, by themselves, establish full business correctness.
 
+## Business Insights
+
+Analysis of the Gold-layer tables revealed the following findings:
+
+### 1. Country Sales Performance
+- The **United Kingdom** recorded the highest net sales value among the countries returned by the country-ranking query, at **16,382,583.90**.
+- This highlights the UK's importance in the retail dataset's sales performance.
+
+### 2. Monthly Sales Trends
+- **November 2011** was the highest-sales month in the monthly aggregation, with a net sales value of **1,461,756.25**.
+- Sales were approximately **2.7% higher** than November 2010, which recorded **1,422,654.64**.
+
+### 3. Product Sales Performance
+- **REGENCY CAKESTAND…** ranked first in the product aggregation by net sales, at **327,813.65**.
+- **DOTCOM POSTAGE** ranked second, at **322,647.47**. As this is a postage-related item, it should be distinguished from physical merchandise when interpreting product performance.
+
+### Interpretation Notes
+- Net sales amount represents the aggregated transaction value (`quantity × price`), not profit.
+- Negative quantities and cancellation-related transactions are retained in the dataset and can affect net sales.
+- These findings describe the available dataset and should not automatically be interpreted as audited revenue or future business forecasts.
+
+
 ## Key Learnings
 
 - Implementing a Bronze–Silver–Gold data architecture.
