@@ -149,6 +149,29 @@ Analysis of the Gold-layer tables revealed the following findings:
 
 UCI Machine Learning Repository: [Online Retail II Dataset](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
 
+## How to Run the Project
+
+### Prerequisites
+- Access to a Microsoft Fabric workspace with the required permissions and available capacity.
+- A Lakehouse to store the project data.
+- Power BI Desktop to explore the report.
+- The source dataset: [UCI Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii).
+
+### Execution Steps
+1. Download the source dataset from the UCI Machine Learning Repository.
+2. Upload the source files to the appropriate location in the Fabric Lakehouse.
+3. Run `nb_bronze_retail_ingestion` to ingest the source data into the Bronze layer.
+4. Run `nb_silver_retail_transformation` to clean and transform the data into the Silver layer.
+5. Run `nb_gold_retail_analytics` to generate the Gold-layer analytical tables.
+6. Execute `pl_retail_sales_end_to_end` to orchestrate the end-to-end pipeline, after configuring the required notebook and Lakehouse references.
+7. Open the Power BI report in the `powerbi/` folder to explore the dashboard.
+
+### Notes
+- Update workspace, Lakehouse, file paths, and other environment-specific references before running the notebooks.
+- Microsoft Fabric capacity, permissions, and licensing can affect execution.
+- The report and notebook outputs depend on the dataset version and transformation logic used.
+
+
 ## Author
 
 **Samprath Shanbhag**
